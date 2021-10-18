@@ -6,19 +6,22 @@ namespace Lab_4_Ex_1_var_11_Csharp
     {
         void Move();
     }
-    
-    public abstract class Vehicle : IMovable
+
+    public interface ICountSpeed
     {
-        protected double Speed;
+        double CountSpeed();
+    }
+    
+    public abstract class Vehicle : IMovable, ICountSpeed
+    {
         protected double Mass;
         protected int PassengerSeatCount;
         protected string Name;
         protected string EngineName;
         protected string EngineType;
 
-        public Vehicle(double speed, double mass, int passengerSeatCount, string name, string engineName, string engineType)
+        public Vehicle(double mass, int passengerSeatCount, string name, string engineName, string engineType)
         {
-            this.Speed = speed;
             this.Mass = mass;
             this.PassengerSeatCount = passengerSeatCount;
             this.Name = name;
@@ -27,6 +30,10 @@ namespace Lab_4_Ex_1_var_11_Csharp
         }
 
         public abstract void Move();
+        public double CountSpeed()
+        {
+            return (Mass + PassengerSeatCount * 50) * 8;
+        }
     }
 
     public class Car : Vehicle
@@ -36,7 +43,7 @@ namespace Lab_4_Ex_1_var_11_Csharp
 
         public Car(double speed, double mass, int passengerSeatCount, string name, string engineName, string engineType,
             string bodyType, string motorPosition) :
-            base(speed, mass, passengerSeatCount, name, engineName, engineType)
+            base(mass, passengerSeatCount, name, engineName, engineType)
         {
             this.bodyType = bodyType;
             this.motorPosition = motorPosition;
@@ -57,7 +64,7 @@ namespace Lab_4_Ex_1_var_11_Csharp
         public Train(double speed, double mass, int passengerSeatCount, string name, string engineName,
             string engineType,
             double ticketCost, int carloadCount) :
-            base(speed, mass, passengerSeatCount, name, engineName, engineType)
+            base(mass, passengerSeatCount, name, engineName, engineType)
         {
             this.ticketCost = ticketCost;
             this.carloadCount = carloadCount;
